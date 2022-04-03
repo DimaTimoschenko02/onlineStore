@@ -8,5 +8,5 @@ const authValid = require('../middleware/authToken')
 router.post('/registration' , userController.registration)
 router.post('/login' , userController.login)
 router.get('/auth' ,authValid, userController.check )
-
+router.get('/' , userController.getAll )
 module.exports = router
