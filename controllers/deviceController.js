@@ -1,4 +1,4 @@
-const {Device , DeviceInfo} = require('../models/models')
+const {Device , DeviceInfo, User} = require('../models/models')
 const ApiError = require('../error/ApiError')
 const uuid = require('uuid')
 const path = require('path')
@@ -36,7 +36,7 @@ class DeviceController{
         
             let devices
             let {brandId , typeId , limit , page} = req.query
-            limit = limit || 2
+            limit = limit || 100
             page = page || 1
             let offset = page * limit - limit
             
@@ -62,6 +62,11 @@ class DeviceController{
             include: [{model: DeviceInfo , as: 'info'}]
         })
         res.json(device)
+    }
+    async deleteOne(req,res){
+        const {id} = req.params
+        await Device.destroy({where:{id}})
+        res.json({message:'ok'})
     }
 
 }
